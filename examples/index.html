@@ -1,0 +1,84 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="pragma" CONTENT="no-cache">
+        <title>ebap demo</title>
+        <link rel="stylesheet" href="assets/css/ebap.css"/>
+    </head>
+    <body>
+        <script charset="utf-8" src="assets/js/lib/jquery.min.js"></script>
+        <script charset="utf-8" src="assets/js/lib/miniui.js"></script>
+        <script charset="utf-8" src="../base.js"></script>
+        <script charset="utf-8">
+        ebapBase.regesiter({
+            'pcc': {
+                'demo': function(options) {
+                    var po = ebapUtils.getAllOptions(options);
+                    var self = {
+                        start: function (opts) {
+                            var dpo = ebapUtils.genDpo(self, opts, options);
+                            dpo(['info', 'ok'], function(i, ok) {
+                                console.log('i', i, ok);
+                            });
+                        }
+                    }
+                    return self;
+                }
+            }
+        });
+        var ebapDemo = ebapBase.get({
+            key: 'pcc.demo', 
+            age: 25,
+            ok: 'ccc',
+            deps: [{
+                key: 'modal',
+            }
+            ],
+            beforeCreate: function (options) {
+                var po =ebapUtils.getAllOptions(options);
+                var extraOpts = {};
+                po(['key','age'], function(_key, age) {
+                    if (['list','modal', 'tabs', 'form', 'login'].indexOf(_key.toString()) === -1) {
+                        extraOpts[_key] = 'pcc.'+ _key;
+                    }
+                    if (age<30) {
+                        extraOpts['ageRange'] = '青年人';
+                    }
+                });
+                return $.extend(options, extraOpts);
+            },
+            created: function(ins, deps) {
+                ebapUtils.eventProxy($('#root'),{
+                    cls: 'test-root',
+                    tagName: 'a'
+                }, function(targetInfo) {
+                    alert('targetInfo');
+                });
+            },
+            mounted: function(moduleIns) {
+                console.trace();
+                var moduleDeps = moduleIns.moduleDeps;
+                var modal =moduleDeps.modal;
+                return $.extend({}, moduleIns, {
+                    hide: function() {
+                        console.log('modal will hide', 'currentState:', modal.getState());
+                        modal.hide();
+                        return this;
+                    },
+                    alertAge: function (opts) {
+                        var dpo = ebapUtils.genDpo(moduleIns, opts, moduleIns.parseOBK);
+                        dpo(['ageRange'], function(ageRange) {
+                            console.log('ageRange', ageRange);
+                        })
+                    }
+                });
+            }
+        });
+        console.dir(ebapDemo);
+        ebapDemo.hide().start({
+            info: 'react everything'
+        });
+        </script>
+    </body>
+</html>

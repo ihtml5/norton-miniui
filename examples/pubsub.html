@@ -1,0 +1,50 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="pragma" CONTENT="no-cache">
+        <title>ebap demo</title>
+        <link rel="stylesheet" href="assets/css/ebap.css"/>
+        <style>
+            .base-container {
+                background-color: #fff;
+            }
+            .base-left {
+                float: left;
+                width: 200px;
+                background-color: #111;
+                color: #fff;
+                text-align: center;
+            }
+            .base-right {
+                margin-left: 210px;
+                height: 100%;
+                background-color: #456;
+                color: #fff;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="base-container">
+            <div class="base-left">
+                left
+            </div>
+            <div class="base-right">
+                right
+            </div>
+        </div>
+        <script charset="utf-8" src="assets/js/lib/jquery.min.js"></script>
+        <script charset="utf-8" src="assets/js/lib/miniui.js"></script>
+        <script charset="utf-8" src="../fake-pubsub.js"></script>
+        <script charset="utf-8">
+            // var token = Pubsub.subscribe('HELLO WORLD.Test', function (msg, data) {
+            //     alert(data);
+            // });
+            // document.onclick = function (e) {
+            //     Pubsub.publishSync('HELLO WORLD.Test', 'CHANGE');
+            //     Pubsub.unsubscribe(token);
+            // };
+        </script>
+    </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="pragma" CONTENT="no-cache">
+        <title>ebap demo</title>
+        <link rel="stylesheet" href="assets/css/ebap.css"/>
+    </head>
+    <body>
+        <script charset="utf-8" src="assets/js/lib/jquery.min.js"></script>
+        <script charset="utf-8" src="assets/js/lib/miniui.js"></script>
+        <script charset="utf-8" src="../base.js"></script>
+        <script charset="utf-8">
+            var ebapStore = ebapBase.get({
+                key: 'store',
+                storeType: 'local',
+                created: function (ins) {
+                    console.log('ins', ins);
+                    ins.on('storage', function(e) {
+                        console.log(e)
+                    });
+                },
+                mounted: function (store) {
+                    console.dir(store);
+                    store.clearAll();
+                    store.set('local', 'cccxxxx')
+                }
+            });
+
+        </script>
+    </body>
+</html>

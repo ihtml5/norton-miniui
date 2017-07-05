@@ -1,0 +1,199 @@
+/*
+  基础组件类
+*/
+.ebap-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.ebap-btn-warning {
+    color: #fff;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
+.ebap-btn-info {
+    width: auto;
+    height: 35px;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    background-color: #3daae9;
+    background-image: -moz-linear-gradient(top,#46aeea,#2fa4e7);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#46aeea),to(#2fa4e7));
+    background-image: -webkit-linear-gradient(top,#46aeea,#2fa4e7);
+    background-image: -o-linear-gradient(top,#46aeea,#2fa4e7);
+    background-image: linear-gradient(to bottom,#46aeea,#2fa4e7);
+    background-repeat: repeat-x;
+    border-color: #2fa4e7 #2fa4e7 #157ab5;
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff46aeea',endColorstr='#ff2fa4e7',GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+/*
+  module: ebapBase.modal
+*/
+
+.ebap-maskContainer, .ebap-gmaskContainer {
+     position: fixed;
+     width: 100%;
+     height: 100%;
+     left: 0;
+     top: 0;
+     bottom: 0;
+     right: 0;
+     background-color: #555;
+     background-color: rgba(0,0,0,0.15);
+     z-index: 5000;
+ }
+ .ebap-modalCnt {
+     padding: 60px 10px 10px;
+     position: absolute;
+     width: 60%;
+     max-height: 70%;
+     left: 20%;
+     /*margin-left: -400px;*/
+     top: 15%;
+     background-color: #fff;
+     border: 1px solid #eee;
+     -webkit-border-radius: 10px;
+     -ms-border-radius: 10px;
+     -o-border-radius: 10px;
+     -moz-border-radius: 10px;
+     border-radius: 10px;
+     /*overflow-y: auto;*/
+     overflow: hidden;
+ }
+ .ebap-modal-tips {
+     position: absolute;
+     top: 10px;
+     width: 100%;
+     overflow: hidden;
+ }
+ .ebap-confirmSure {
+    float: left;
+    top: 10px;
+    left: 20px;
+ }
+  .ebap-gmodalCnt {
+     padding: 60px 10px 10px;
+     position: absolute;
+     width: 400px;
+     max-height: 200px;
+     left: 50%;
+     margin-left: -200px;
+     /*margin-left: -400px;*/
+     top: 50%;
+     margin-top: -100px;
+     background-color: #fff;
+     border: 1px solid #eee;
+     border-radius: 10px;
+     /*overflow-y: auto;*/
+     overflow: hidden;
+ }
+ @media screen and (min-width: 1000px) {
+     .ebap-modalCnt {
+         position: absolute;
+         width: 800px;
+         left: 50%;
+         margin-left: -400px;
+     }
+ }
+ .ebap-modal-closeBtn {
+     float: right;
+     margin-right: 20px;
+     /*font-size: 16px;*/
+     font-weight: 600;
+     cursor: pointer;
+ }
+ .ebap-modalMsg {
+     margin-bottom: 10px;
+     padding-top: 15px;
+     font-size: 16px;
+     font-weight: 600;
+     text-align: center;
+     color: #555;
+ }
+.ebap-modal-label {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #999;
+}
+.ebap-modal-options {
+    position: absolute;
+    top: 60%;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    border-top: 1px solid #eee;
+}
+.ebap-modal-actions {
+    text-align: center;
+}
+.ebap-confirmBtn {
+    background-color: #eee;
+}
+.ebap-confirmBtn, .ebap-modal-closeBtn {
+    outline: none;
+    border: none;
+}
+.ebap-confirmBtn:active, .ebap-modal-closeBtn:active, .ebap-confirmBtn:focus, .ebap-modal-closeBtn:focus,
+.ebap-modal-confirmBtn, .ebap-modal-confirmBtn:active, .ebap-modal-confirmBtn:focus {
+    outline: none;
+    border: none;
+}
+.ebap-modal-confirmBtn i, .ebap-modal-closeBtn i {
+    margin-right: 5px;
+}
+.ebap-modal-tipsCnt {
+    color: #333;
+    font-weight: 700;
+    font-size: 13px;
+}
+.ebap-modal-tipsCnt i {
+    position: relative;
+    top: 2px;
+    margin-right: 5px;
+    font-size: 20px;
+    color: #f0ad4e;
+}
+.ebap-modal-errorTitle {
+    margin-left: 20px;
+    font-size: 14px;
+    color: #333;
+    font-weight: 600;
+}
+.ebap-modal-modalDescp {
+    margin-top: 5px;
+    text-indent: 1em;
+    padding: 2px 2px 2px 6px;
+    font-weight: 500;
+    color: #646464;
+}
+.ebap-modal-detailName {
+    margin-right: 10px;
+    color: #646464;
+    font-weight: 700;
+}
+.ebap-modal-msgDetailHidden {
+    display: none;
+}
+.ebap-modal-detailCon {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}

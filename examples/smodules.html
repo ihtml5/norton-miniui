@@ -1,0 +1,76 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="pragma" CONTENT="no-cache">
+        <title>ebap demo</title>
+        <link rel="stylesheet" href="assets/css/ebap.css"/>
+    </head>
+    <body>
+        <button class="ebap-btn"> publish </button>
+        <script charset="utf-8" src="assets/js/lib/jquery.min.js"></script>
+        <script charset="utf-8" src="assets/js/lib/miniui.js"></script>
+        <script charset="utf-8" src="../base.js"></script>
+        <script charset="utf-8">
+            function info (info) {
+                alert(info);
+            }
+            var ebapAllModules = ebapBase.get({
+                key: 'smodules',
+                ids: ['1', '2'],
+                names: [],
+                mType: 'ajax',
+                method: 'get',
+                deps: [{
+                    key: 'modal',
+                    tplCfg: {
+                        desc: 'base intro',
+                        detailInfo: [{
+                            name: 'ccc',
+                            description: 'ccccxxx'
+                        }]
+                    },
+                    created: function (ins) {
+                        ins.hide();
+                    },
+                    mounted: function (moduleIns) {
+                        // var token = moduleIns._on('smodules.show',function (info) {
+                        //     console.log('info', info);
+                        //     moduleIns.show();
+                        // });
+                        var token = moduleIns._on('smodules.show', info);
+                        ebapUtils.setParams('showToken', token);
+                        return undefined;
+                    }
+                }],
+                url: 'http://localhost:3002/users',
+                success: function(success, status, xhr) {
+                    console.log('xhr', xhr.getAllResponseHeaders());
+                },
+                data: this.method === 'post' && JSON.stringify({
+                    name: 'express'
+                }),
+                created: function (ins, deps) { 
+                    ebapUtils.eventProxy({
+                        context: $(document),
+                        tagName: 'button',
+                        cls: 'ebap-btn',
+                        cb: function (targetInfo) {
+                            ins._trigger('smodules.show','info');
+                            ins._off('smodules.show');
+                        }
+                    })
+                    ins.get(0).start({
+                        url: 'http://localhost:3002/users'
+                    });
+                },
+                mounted: function (moduleIns) {
+                    return $.extend(moduleIns, {
+                        toggle: function(opts) {
+                        }
+                    })
+                }
+            });
+        </script>
+    </body>
+</html>
