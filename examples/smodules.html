@@ -34,10 +34,6 @@
                         ins.hide();
                     },
                     mounted: function (moduleIns) {
-                        // var token = moduleIns._on('smodules.show',function (info) {
-                        //     console.log('info', info);
-                        //     moduleIns.show();
-                        // });
                         var token = moduleIns._on('smodules.show', info);
                         ebapUtils.setParams('showToken', token);
                         return undefined;

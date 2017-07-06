@@ -3,10 +3,6 @@
  */
 
 (function(root, factory) {
-    // 快捷方法
-    var nativeToString = Object.prototype.toString;
-    var nativeSlice = Array.prototype.slice;
-    var nativeHasOwn = Object.prototype.hasOwnProperty;
     // 生成ebapBase
     var ebapBase = factory();
     root.ebapBase = ebapBase || {};
@@ -23,6 +19,11 @@
 		exports.ebapBase = ebapBase;
 	}
 })(typeof window === 'object' && window, function () {
+    // 快捷方法
+    var nativeToString = Object.prototype.toString;
+    var nativeSlice = Array.prototype.slice;
+    var nativeHasOwn = Object.prototype.hasOwnProperty;
+
     var ebapBase = (function() {
     var ebapModules = {};
     var ebapInstance = null;
@@ -413,6 +414,45 @@
                 console[type || 'error'](localCfg[i], info[i]);
             }
         },
+        now: function() {
+            return new Date();
+        },
+        throttle: function (func, wait, options) {
+            var context = null;
+            var timeId = null;
+            var args = null;
+            var previous = 0;
+            var result = null;
+            var later = function () {
+                previous = options.leading === true ? 0 : utils.now();
+                timeId = null;
+                result = func.apply(context, args);
+                if (!timeId) {
+                    context = args = null;
+                }
+            }
+            return function () {
+                var now = utils.now();
+                args = arguments;
+                if (!previous || options.leading === false) {
+                    previous = utils.now();
+                }
+                var remaining = wait - (now - previous);
+                if (remaining < 0 || remaining> wait) {
+                    if (timeId) {
+                        clearTimeout(timeId);
+                        timeId = null;
+                    }
+                    result = func.apply(context, args);
+                    if (!timeId) {
+                        context = args = null;
+                    }
+                } else if (!timeId && options.trailing  !== false) {
+                    timeId = setTimeout(later, remaining);
+                }
+                return result;
+            }
+        },
         getNormalDate: function (time) {
             var startTime = null;
             if (typeof startTime === 'number') {
@@ -750,7 +790,7 @@
             return commonCfg;
         },
         hackIe: function (verStr, func) {
-            if ($.inArray(verStr.split(' '), document.documentMode.toString())>-1) {
+            if ($.inArray(verStr.split(','), document.documentMode.toString()) !== -1) {
                 func.apply(null, nativeSlice.call(arguments).length>2 && nativeSlice.call(arguments, 2))
             }
         },
@@ -1261,7 +1301,11 @@
                 data = parseOBK('openCfg.add.data', { action: "new",parentId: ebapSelectedRows && (ebapSelectedRows.id || '')});
                 deepParseOBK(['openCfg.add.mode.value', 'openCfg.add.callback', 'openCfg.add.mode.url'], function (value, cb, url) {
                     if (value === 'inline' && cb) {
-                        cb(ebapListIns, deepParseOBK);
+                        cb({
+                            context: null,
+                            ins: ebapListIns,
+                            deepParseOBK: deepParseOBK
+                        });
                     } else {
                         url && (modeUrl = ebapUtils.prefixPath(deepParseOBK(url)));
                     }
@@ -1278,7 +1322,8 @@
                             if (result) {
                                 result({
                                     context: iframe.contentWindow,
-                                    deepParseOBK: deepParseOBK
+                                    deepParseOBK: deepParseOBK,
+                                    ins: ebapListIns
                                 })
                             }
                         });
@@ -1291,17 +1336,14 @@
             },
             search: function (opts) {
                 var dpo = utils.genDpo(self, opts, options);
-                var _key = ebapUtils.getInstance(parseOBK('search.keywords','key')).getValue();
-                dpo(['search.ajax', 'search.callback', 'search.value'], function(result, cb, value) {
-                    var args = [].slice.call(arguments);
-                    var opts = args[3];
-                    if (cb && typeof cb === 'function') {
-                        cb(_key.length>0 ? _key : (value || ''));
-                    } else {
-                        ebapTreeGridIns.load({ key: opts.searchKey });
-                    }
-                },{
-                    searchKey: _key
+                dpo(['search.keywords', 'search.id', 'search.ajax', 'search.callback', 'search.vlaue'], 
+                    function(keywords, id, ajax, cb, value) {
+                        var _key = ebapUtils.getInstance(keywords || id).getValue();
+                        if (cb && typeof cb === 'function') {
+                            cb(_key.length>0 ? _key : (value || ''));
+                        } else {
+                            ebapTreeGridIns.load({ key: _key});
+                        }
                 });
             },
             edit: function (opts) {

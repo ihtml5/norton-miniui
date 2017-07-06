@@ -51,6 +51,9 @@ var ebapIns = ebapBase.get({
     deps: [{
         key: 'demo'
     }],
+    beforeParse: function (options) {
+        // 在调用mi.parse之前
+    },
     beforeCreate: function(options) {
         // 默认传入的是组件当前的配置
         // 依赖分析完成，待调用组件模块前

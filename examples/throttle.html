@@ -5,54 +5,6 @@
         <meta http-equiv="pragma" CONTENT="no-cache">
         <title>ebap demo</title>
         <link rel="stylesheet" href="assets/css/ebap.css"/>
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-                background-color: #fff;
-            }
-            .base-container {
-                /*background-color: #fff;*/
-            }
-            .base-left {
-                position: fixed;
-                top: 0;
-                left: 0;
-                float: left;
-                width: 200px;
-                height: auto;
-                background-color: #111;
-                color: #fff;
-                text-align: center;
-            }
-            .base-right {
-                margin-left: 210px;
-                height: auto;
-                background-color: #456;
-                color: #fff;
-                text-align: center;
-            }
-            .base-inner-left {
-                margin-top: 20px;
-                float: right;
-                background-color: #456;
-                clear: both;
-            }
-            .base-left-container:after {
-                content: '';
-                display: table;
-                width: 0;
-                height: 0;
-                clear: both;
-            }
-            .base-center {
-                float: left;
-                margin-left: 200px;
-                width: 10px;
-                min-height: 1000%;
-                background-color: red;
-            }
-        </style>
     </head>
     <body>
         <div class="base-container">
@@ -69,15 +21,46 @@
         </div>
         <script charset="utf-8" src="assets/js/lib/jquery.min.js"></script>
         <script charset="utf-8" src="assets/js/lib/miniui.js"></script>
-        <script charset="utf-8" src="../fake-pubsub.js"></script>
+        <script charset="utf-8" src="../base.js"></script>
         <script charset="utf-8">
-            // var token = Pubsub.subscribe('HELLO WORLD.Test', function (msg, data) {
-            //     alert(data);
-            // });
-            // document.onclick = function (e) {
-            //     Pubsub.publishSync('HELLO WORLD.Test', 'CHANGE');
-            //     Pubsub.unsubscribe(token);
-            // };
+        //  function throtte(fn, delay, atleatest) {
+        //      var timeId = null;
+        //      var previous = null;
+        //      var args = [].slice.call(arguments,3);
+        //      return function (e) {
+        //          var now = new Date();
+        //          var context = this;
+        //          if (!previous) {
+        //              previous = now;
+        //          }
+        //          if (atleatest && previous - now > atleatest) {
+        //              fn();
+        //              previous = now;
+        //              clearTimeout(timeId);
+        //          } else {
+        //              clearTimeout(timeId);
+        //              timeId = setTimeout(function () {
+        //                  fn.apply(context, args);
+        //                  previous = null;
+        //                  context = null;
+        //              }, delay);
+        //          }
+        //      }
+        //  }
+        //  window.onresize = throtte(function(info) {
+        //      alert(info);
+        //  }, 100, 200, 'info');
+        //  var intervalId =setInterval(function() {
+        //      console.log('intervalId');
+        //      clearInterval(intervalId);
+        //  }, 1000)
+
+        window.onresize = ebapUtils.throttle(function() {
+            console.log('thrott::::');
+        }, 300, {
+            leading: false,
+            trailing: false
+        });
         </script>
     </body>
 </html>
