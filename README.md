@@ -1,4 +1,4 @@
-# base.js
+# tnt.js
 ![](base.png)
 
 ## 依赖
