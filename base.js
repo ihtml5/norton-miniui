@@ -1,5 +1,5 @@
 /*
- base.js 基于miniui和jquery的高级封装
+ tnt.js 基于miniui和jquery的高级封装
  */
 
 (function(root, factory) {
